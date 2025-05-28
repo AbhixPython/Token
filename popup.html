@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Serverx V3 Extracter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #007bff;
+      --secondary-color: #28a745;
+      --warning-color: #ffc107;
+      --danger-color: #dc3545;
+      --text-color: #333;
+      --border-color: #ddd;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #000000, #8a2be2); /* Black to Purple Gradient */
+      color: var(--text-color);
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 400px;
+      background: rgba(255, 255, 255, 0.11); /* Changed to 11% opacity (100% - 89%) */
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slightly darker shadow */
+      border: 1px solid rgba(255, 255, 255, 0.2); /* Light border */
+      text-align: center;
+      animation: slideIn 0.4s ease-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 5px;
+      animation: colorChange 2s infinite alternate; /* Example animation */
+    }
+
+    @keyframes colorChange {
+      0% { color: var(--text-color); }
+      100% { color: #fff; /* Change heading color to white for better contrast */ }
+    }
+
+    .version-text {
+      display: block;
+      font-size: 10px;
+      color: #eee; /* Lighter text for better contrast */
+      margin-bottom: 10px;
+      animation: fadeIn 0.6s ease-out 0.2s forwards;
+      opacity: 0;
+    }
+
+    button {
+      width: 100%;
+      padding: 8px;
+      margin: 6px 0;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out, background-color 0.2s ease-in-out;
+      color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add a subtle shadow to buttons */
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+
+    .btn-primary { background-color: var(--primary-color); animation: pulsePrimary 1.5s infinite alternate; }
+    .btn-secondary { background-color: var(--secondary-color); animation: pulseSecondary 1.5s infinite alternate; }
+    .btn-warning { background-color: var(--warning-color); color: #333; animation: pulseWarning 1.5s infinite alternate; }
+    .btn-danger { background-color: var(--danger-color); animation: pulseDanger 1.5s infinite alternate; }
+
+    @keyframes pulsePrimary {
+      0% { background-color: var(--primary-color); transform: scale(1); }
+      100% { background-color: #0056b3; transform: scale(1.02); }
+    }
+
+    @keyframes pulseSecondary {
+      0% { background-color: var(--secondary-color); transform: scale(1); }
+      100% { background-color: #1e7e34; transform: scale(1.02); }
+    }
+
+    @keyframes pulseWarning {
+      0% { background-color: var(--warning-color); transform: scale(1); }
+      100% { background-color: #d39e00; transform: scale(1.02); }
+    }
+
+    @keyframes pulseDanger {
+      0% { background-color: var(--danger-color); transform: scale(1); }
+      100% { background-color: #b02a37; transform: scale(1.02); }
+    }
+
+    /* Button Rows */
+    .button-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    .button-row button {
+      width: 32%;
+      animation: fadeInUp 0.5s ease-out forwards;
+      opacity: 0;
+    }
+
+    .button-row button:nth-child(1) { animation-delay: 0.3s; }
+    .button-row button:nth-child(2) { animation-delay: 0.4s; }
+    .button-row button:nth-child(3) { animation-delay: 0.5s; }
+
+    @keyframes fadeInUp {
+      from { transform: translateY(10px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Output Box */
+    .output {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.4); /* Lighter border */
+      background: rgba(0, 0, 0, 0.05); /* Slightly darker background */
+      font-size: 13px;
+      word-wrap: break-word;
+      max-height: 120px;
+      overflow-y: auto;
+      text-align: left;
+      animation: expandOutput 0.4s ease-out 0.6s forwards;
+      transform: scaleY(0);
+      opacity: 0;
+      transform-origin: top;
+      color: #eee; /* Lighter text for output */
+    }
+
+    @keyframes expandOutput {
+      from { transform: scaleY(0); opacity: 0; }
+      to { transform: scaleY(1); opacity: 1; }
+    }
+
+    .help-text {
+      font-size: 10px;
+      color: #aaa; /* Even lighter help text */
+      text-align: center;
+      margin-top: 5px;
+      animation: fadeIn 0.6s ease-out 0.8s forwards;
+      opacity: 0;
+    }
+
+    footer {
+      margin-top: 15px;
+      font-size: 12px;
+      color: #ccc; /* Light gray footer text */
+      animation: slideUpFooter 0.5s ease-out 1s forwards;
+      transform: translateY(10px);
+      opacity: 0;
+    }
+
+    footer a {
+      color: #bbb; /* Slightly lighter link color */
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+      color: #eee;
+    }
+
+    @keyframes slideUpFooter {
+      from { transform: translateY(10px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Cookie Token Appstate Extractor</h1>
+    <small class="version-text">Version 3.0</small>
+
+    <div class="button-row">
+      <button id="fetchCookies" class="btn-primary">Cookie</button>
+      <button id="fetchToken" class="btn-warning">Token</button>
+      <button id="fetchAppState" class="btn-secondary">AppState</button>
+    </div>
+
+    <div id="output" class="output">Results will appear here...</div>
+
+    <div class="button-row">
+      <button id="selectAll" class="btn-primary">Copy</button>
+      <button id="logout" class="btn-danger">Logout</button>
+    </div>
+
+    <p class="help-text">Click on Logout to avoid token and cookie expiration.</p>
+
+    <button id="connectInstagram" class="btn-primary">Connect Instagram</button>
+    <p class="help-text">If you're having trouble getting a token, click "Connect Instagram."</p>
+
+    <footer>
+      <p>©️ 2025 Serverx. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
